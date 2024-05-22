@@ -1,0 +1,330 @@
+import random
+
+def check_for_winner():
+    
+    if (mtrix[0][0]=="X" and mtrix[1][0]=="X" and mtrix[2][0]=="X") or \
+       (mtrix[0][1]=="X" and mtrix[1][1]=="X" and mtrix[2][1]=="X") or \
+       (mtrix[0][2]=="X" and mtrix[1][2]=="X" and mtrix[2][2]=="X") or \
+       (mtrix[0][0]=="X" and mtrix[0][1]=="X" and mtrix[0][2]=="X") or \
+       (mtrix[1][0]=="X" and mtrix[1][1]=="X" and mtrix[1][2]=="X") or \
+       (mtrix[2][0]=="X" and mtrix[2][1]=="X" and mtrix[2][2]=="X") or \
+       (mtrix[0][0]=="X" and mtrix[1][1]=="X" and mtrix[2][2]=="X") or \
+       (mtrix[2][0]=="X" and mtrix[1][1]=="X" and mtrix[0][2]=="X"):
+        
+
+        
+        if winner[0]!="P":
+            winner[0]="P"
+            #print("Player Wins")
+            #print(score_player[0])    
+
+            #print("Your Score:",score_player[0])
+            draw_score()
+        return True
+
+    if (mtrix[0][0]=="O" and mtrix[1][0]=="O" and mtrix[2][0]=="O") or \
+       (mtrix[0][1]=="O" and mtrix[1][1]=="O" and mtrix[2][1]=="O") or \
+       (mtrix[0][2]=="O" and mtrix[1][2]=="O" and mtrix[2][2]=="O") or \
+       (mtrix[0][0]=="O" and mtrix[0][1]=="O" and mtrix[0][2]=="O") or \
+       (mtrix[1][0]=="O" and mtrix[1][1]=="O" and mtrix[1][2]=="O") or \
+       (mtrix[2][0]=="O" and mtrix[2][1]=="O" and mtrix[2][2]=="O") or \
+       (mtrix[0][0]=="O" and mtrix[1][1]=="O" and mtrix[2][2]=="O") or \
+       (mtrix[2][0]=="O" and mtrix[1][1]=="O" and mtrix[0][2]=="O"):
+        
+        winner[0]="C"
+        #print("Computer Wins")
+
+        #print("Computer Score:",score_computer[0])
+        draw_score()
+        return True
+        
+    for i in range(3):
+        for j in range(3):
+            if mtrix[i][j]=="":
+                
+
+                return False
+        
+        winner[0]="D"
+        
+    return True
+    
+    
+def move_pointer(event):
+    row_value=row[0]
+    col_value=col[0]
+    
+    if game_reset[0]:
+       # print(score_player[0])
+        
+        if event.key == "ArrowLeft":
+            if (pointer.get_x()>=150):
+                pointer.move(-130, 0)
+                col[0]-=1
+                
+        if event.key == "ArrowRight":
+            if pointer.get_x()<=get_width()-220:
+                pointer.move(130,0)
+                col[0]+=1
+                
+        if event.key == "ArrowUp":
+            if pointer.get_y()>=130:
+                pointer.move(0, -120)
+                row[0]-=1
+                
+        if event.key == "ArrowDown":
+            if pointer.get_y()<=get_height()-150:
+                pointer.move(0,120)
+                row[0]+=1
+                
+        if event.key == "Enter" and mtrix[row_value][col_value]=="":
+            X=Image("https://codehs.com/uploads/5eb7699a04f241f71a898dbb5ccba841")
+            X.set_position(pointer.get_x(),pointer.get_y())
+            add(X) 
+            mtrix[row_value][col_value]="X"
+            
+            if not check_for_winner():
+                O=Image("https://codehs.com/uploads/870ee681b8592b8ec1d9203446e6d3d4")
+                random_x = random.randint(0,2)
+                random_y = random.randint(0,2)
+    
+                while mtrix[random_x][random_y] != "":
+                    random_x = random.randint(0,2)
+                    random_y = random.randint(0,2)
+                    
+                if random_x==0 and random_y==0: 
+                    O.set_position(140,120)
+                    
+                elif random_x==0 and random_y==1:
+                    O.set_position(275,120)
+                    
+                elif random_x==0 and random_y==2:
+                    O.set_position(410,120)
+                    
+                elif random_x==1 and random_y==0:
+                    O.set_position(140,240)
+                    
+                elif random_x==1 and random_y==1:
+                    O.set_position(275,240)
+                    
+                elif random_x==1 and random_y==2:
+                    O.set_position(410,240)
+                    
+                elif random_x==2 and random_y==0:
+                    O.set_position(140,360)
+                    
+                elif random_x==2 and random_y==1:
+                    O.set_position(275,360)
+                    
+                elif random_x==2 and random_y==2:
+                    O.set_position(410,360)
+                    
+    
+                mtrix[random_x][random_y]="O"
+                #print(mtrix)
+                add(O) 
+            
+            if check_for_winner():
+                game_reset[0]=False
+                
+                for i in range(3):
+                    for j in range(3):
+                        mtrix[i][j]=""
+                
+                row[0]=0
+                col[0]=0
+                
+                row_value=row[0]
+                col_value=col[0]
+                
+                winning_rectangle = Rectangle(530,50) 
+                winning_rectangle.set_position(35,35)
+                winning_rectangle.set_color(Color.orange)
+                add(winning_rectangle)        
+                
+                if winner[0]=="P":
+                    score_player[0]+=1
+                    title_winner=Text("-Player Wins-")
+                    title_winner.set_position(50,75)
+                    add(title_winner)
+                    #print("Player Wins ")
+                elif winner[0]=="C":
+                    score_computer[0]+=1
+                    title_winner=Text("-C0MPUTER W1NS-")   
+                    title_winner.set_position(50,75)
+                    add(title_winner)
+                elif winner[0]=="D":
+                    title_winner=Text("-Match Tie-")
+                    title_winner.set_position(50,75)
+                    add(title_winner)
+                #print("Player:",score_player[0],"  Computer:", score_computer[0])
+                draw_score()
+                title2=Text(" Click to Restart ")
+                title2.set_position(360,70)
+                title2.set_font("13pt Arial")
+                title2.set_color(Color.black)
+                add(title2)
+                
+                pointer.set_position(140,120)
+                paint_tictactoe()
+    
+        if event.key == "X" or event.key == "x":
+            game_reset[0]=False
+            winning_rectangle = Rectangle(505,45) 
+            winning_rectangle.set_position(45,45)
+            winning_rectangle.set_color(Color.yellow)
+            add(winning_rectangle)    
+        
+            title2=Text("Game Over!")
+            title2.set_position(45,70)
+            add(title2)
+            
+            if score_player[0]>score_computer[0]:
+                title3=Text("Player Wins Overall")
+                title3.set_font("15pt Arial")
+                title3.set_position(300,65)
+                add(title3)
+            elif score_player[0]<score_computer[0]:
+                title3=Text("Computer Wins Overall")
+                title3.set_font("15pt Arial")
+                title3.set_position(300,65)
+                add(title3)
+            else:
+                title3=Text("It's a Tie Overall")
+                title3.set_font("15pt Arial")
+                title3.set_position(300,65)
+                add(title3)            
+            return
+
+def start_game(x,y):
+    game_reset[0]=True
+    remove(title2)
+    remove(title3)
+    remove(title4)
+    title=Text(" Press 'x' to end game")
+    title.set_font("12pt Arial")
+    title.set_position(400,20)
+    add(title)
+    
+    #clear area:
+    clear_square = Rectangle(520,420) 
+    clear_square.set_position(40,40)
+    clear_square.set_color(Color.white)
+    add(clear_square)
+
+    paint_tictactoe()
+    add(pointer)
+
+def draw_score():
+
+    scoreplayer.set_text(str(score_player[0]))
+    scorecomputer.set_text(str(score_computer[0]))
+
+
+def paint_court():
+
+    
+    title=Text("   TIC TAC TOE")
+    title.set_position(get_width()/2 - 110,25)
+    add(title)
+
+def paint_tictactoe():
+       
+    vertical_line1 = Rectangle(5, 360)
+    vertical_line1.set_position(230,80)
+    vertical_line1.set_color(Color.black)
+    add(vertical_line1)
+    
+    vertical_line2 = Rectangle(5, 360)
+    vertical_line2.set_position(370,80)
+    vertical_line2.set_color(Color.black)
+    add(vertical_line2)
+    
+ 
+    horizontal_line1 = Rectangle(370, 5)
+    horizontal_line1.set_position(120,200)
+    horizontal_line1.set_color(Color.black)
+    add(horizontal_line1)
+    
+    horizontal_line2 = Rectangle(370, 5)
+    horizontal_line2.set_position(120,320)
+    horizontal_line2.set_color(Color.black)
+    add(horizontal_line2)
+
+
+set_size(600, 500)
+winner=[""]
+game_reset=[True]
+
+score_computer=[0]
+score_player=[0]
+
+mtrix=[[""]*3,
+        [""]*3,
+        [""]*3]
+row=[0]
+col=[0]
+
+row_value=row[0]
+col_value=col[0]
+
+horizontal_bar = Rectangle(get_width(),40) 
+horizontal_bar.set_position(0,0)
+horizontal_bar.set_color(Color.orange)
+add(horizontal_bar)
+
+horizontal_bar = Rectangle(get_width(),40) 
+horizontal_bar.set_position(0,get_height()-40)
+horizontal_bar.set_color(Color.orange)
+add(horizontal_bar)
+
+
+
+vertical_bar = Rectangle(40, get_height())
+vertical_bar.set_position(0,0)
+vertical_bar.set_color(Color.orange)
+add(vertical_bar)
+
+vertical_bar = Rectangle(40, get_height())
+vertical_bar.set_position(get_width()-40,0)
+vertical_bar.set_color(Color.orange)
+add(vertical_bar)
+scoreplayer=Text("0")
+scoreplayer.set_position(340,490)
+add(scoreplayer)
+
+scorecomputer=Text("0")
+scorecomputer.set_position(535,490)
+add(scorecomputer)
+
+X=Image("https://codehs.com/uploads/5eb7699a04f241f71a898dbb5ccba841")
+O=Image("https://codehs.com/uploads/870ee681b8592b8ec1d9203446e6d3d4")
+
+title2=Text("        Click to Start")
+title2.set_position(get_width()/2 - 140,get_height()/2)
+add(title2)
+
+title3=Text("          Move the pointer and press 'Enter' to place 'X'")
+title3.set_position(get_width()/2 - 230, get_height()/2+100)
+title3.set_font("13pt Arial")
+add(title3)
+
+title4=Text(" ")
+title4.set_position(get_width()/2 - 230, get_height()/2+130)
+title4.set_font("13pt Arial")
+add(title4)
+
+paint_court()
+
+score_text=Text("SCORE:           Player:         Computer:")
+score_text.set_position(50,490)
+add(score_text)
+
+add_mouse_click_handler(start_game)
+
+
+pointer = Rectangle(50,50 )
+pointer.set_position(140,120)
+pointer.set_color(Color.green)
+
+add_key_down_handler(move_pointer)
