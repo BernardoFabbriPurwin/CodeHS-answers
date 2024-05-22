@@ -1,0 +1,114 @@
+set_size(640, 480)   
+
+
+def start_game(x,y): 
+
+    remove(title2) 
+
+
+
+
+
+x=0 
+
+y=0 
+
+     
+
+def move_block(event): 
+    if event.key == "ArrowLeft":
+        
+        if labyrinth[block_position[0]][block_position[1]-1 ]== 0:
+            block_position[1]-=1
+            my_block.move(-40,0)
+            
+    if event.key == "ArrowRight":
+        print(block_position)
+        if labyrinth[block_position[0]][block_position[1]+1 ]== 0:
+            block_position[1]+=1
+            my_block.move(40,0)
+            print("block pos after" , block_position)
+            
+            
+    if event.key == "ArrowUp":
+        if labyrinth[block_position[0]-1][block_position[1]] == 0:
+            block_position[0]-=1
+            my_block.move(0,-40)
+    if event.key == "ArrowDown":
+        print("before:",block_position)
+        print("lab after",labyrinth[block_position[0]+1][block_position[1]]) 
+        if labyrinth[block_position[0]+1][block_position[1]] == 0:
+            block_position[0]+=1
+            my_block.move(0,40)
+            print("Block position:",block_position)
+    
+    
+
+         
+#---------------------------------------------------------------
+block_position = [1,1]
+print(block_position)
+my_block = Rectangle(40,40 ) 
+
+my_block.set_position(40,40) 
+
+my_block.set_color(Color.green) 
+
+add(my_block) 
+
+  
+
+finish_line = Rectangle(40,40 ) 
+
+finish_line.set_position(get_width()-80,get_height()-80) 
+
+finish_line.set_color(Color.red) 
+
+add(finish_line) 
+
+  
+
+labyrinth= [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		    [1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,1],
+            [1,0,1,1,1,1,1,0,0,0,0,0,1,1,0,1],
+            [1,0,1,0,0,0,1,1,1,1,1,0,1,0,0,1],
+            [1,0,1,1,1,0,1,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,0,0,1,0,1,0,1,0,1,1,0,1],
+            [1,1,1,1,1,0,1,0,1,0,1,0,0,1,0,1],
+            [1,0,1,0,1,0,0,0,1,0,1,0,0,1,0,1],
+            [1,0,1,0,1,1,1,1,1,0,1,1,1,1,0,1],
+            [1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,1,0,0,0,1,0,1,1,1,1,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+         
+
+  
+
+for row in range(12): 
+
+    for column in range(16): 
+
+        if labyrinth[x][y]==1: 
+
+            roadblock = Rectangle(40, 40) 
+
+            roadblock.set_position(40*column,40*row) 
+
+            roadblock.set_color(Color.orange) 
+
+            add(roadblock) 
+
+        y+=1 
+
+    x+=1   
+
+    y=0 
+
+
+title2=Text("<< Click here to START >> ")
+title2.set_position(get_height()/3.5, get_width()/2.4)
+add(title2)
+
+add_mouse_click_handler(start_game) 
+add_key_down_handler(move_block)
