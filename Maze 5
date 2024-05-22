@@ -1,0 +1,152 @@
+import math
+
+
+#KARELS
+"""
+Karel_L = Image("https://codehs.com/uploads/1f74ad44ddb81ca8ad9a5f14eea09027")
+Karel_R = Image("https://codehs.com/uploads/6ff6d788fd012e65932be4ea23d7bd38")
+Karel_U =  Image("https://codehs.com/uploads/4804c1995061abae20da19a170ea3148")
+Karel_D = Image("https://codehs.com/uploads/c3c5ad367ac2ba27335e514ea1fa5956")
+
+"""
+
+my_block = Image("https://codehs.com/uploads/6ff6d788fd012e65932be4ea23d7bd38")
+my_block.set_size(40,40)
+my_block.set_position(40,40)
+add(my_block)
+
+
+set_size(640, 480)   
+
+
+def start_game(x,y): 
+
+    remove(title2) 
+    remove(controls)
+    
+    
+
+
+
+
+
+x=0 
+
+y=0 
+
+     
+
+def move_block(event): 
+    if event.key == "ArrowLeft":
+        print(block_position)
+        if labyrinth[block_position[0]][block_position[1]-1 ]== 0:
+            block_position[1]-=1
+            my_block.move(-40,0)
+            my_block.set_rotation(math.radians(180))
+            remove(win)
+            
+    if event.key == "ArrowRight":
+        print(block_position)
+        if labyrinth[block_position[0]][block_position[1]+1 ]== 0:
+            block_position[1]+=1
+            my_block.move(40,0)
+            my_block.set_rotation(math.radians(0))            
+            remove(win)
+            
+    if event.key == "ArrowUp":
+        print(block_position)
+        if labyrinth[block_position[0]-1][block_position[1]] == 0:
+            block_position[0]-=1
+            my_block.move(0,-40)
+            my_block.set_rotation(math.radians(-90))
+            remove(win)
+            
+    if event.key == "ArrowDown":
+        print(block_position)
+        if labyrinth[block_position[0]+1][block_position[1]] == 0:
+            block_position[0]+=1
+            my_block.move(0,40)
+            my_block.set_rotation(math.radians(90))
+            if my_block.get_x() == finish_line.get_x() and my_block.get_y() == finish_line.get_y():
+                add(win)
+            
+    
+
+         
+#---------------------------------------------------------------
+block_position = [1,1]
+print(block_position)
+
+
+
+
+
+  
+
+finish_line = Rectangle(40,40) 
+
+finish_line.set_position(get_width()-80,get_height()-80) 
+
+finish_line.set_color(Color.red) 
+
+add(finish_line) 
+
+  
+
+labyrinth= [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		    [1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,1],
+            [1,0,1,1,1,1,1,0,0,0,0,0,1,1,0,1],
+            [1,0,1,0,0,0,1,1,1,1,1,0,1,0,0,1],
+            [1,0,1,1,1,0,1,0,0,0,1,0,0,0,0,1],
+            [1,0,0,0,0,0,1,0,1,0,1,0,1,1,0,1],
+            [1,1,1,1,1,0,1,0,1,0,1,0,0,1,0,1],
+            [1,0,1,0,1,0,0,0,1,0,1,0,0,1,0,1],
+            [1,0,1,0,1,1,1,1,1,0,1,1,1,1,0,1],
+            [1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,1,0,0,0,1,0,1,1,1,1,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+         
+
+  
+
+for row in range(12): 
+
+    for column in range(16): 
+
+        if labyrinth[x][y]==1: 
+
+            roadblock = Rectangle(40, 40) 
+
+            roadblock.set_position(40*column,40*row) 
+
+            roadblock.set_color(Color.orange) 
+
+            add(roadblock) 
+
+        y+=1 
+
+    x+=1   
+
+    y=0 
+
+
+title2=Text("<< Click here to START >> ")
+title2.set_position(get_height()/3.5, get_width()/2.4)
+add(title2)
+
+win = Text("You've Escaped the Labyrinth!")
+win.set_position(get_height()/3.5, get_width()/2.4)
+
+
+add_mouse_click_handler(start_game) 
+add_key_down_handler(move_block)
+
+controls = Text("Arrows to move")
+controls.set_position(10,465)
+add(controls)
+
+
+title1 = Text("The Minotaurs Labyrinth")
+title1.set_position(160,30)
+add(title1)
