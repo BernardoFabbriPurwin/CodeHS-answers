@@ -1,0 +1,22 @@
+Karel_R = Image("https://codehs.com/uploads/bcbdf331f6d963487c905e8606abbb2e")
+Karel_R.set_size(40,40)
+Karel_R.set_position(40,40)
+add(Karel_R)
+
+
+Karel_L = Image("https://codehs.com/uploads/55a6e5a20d9af5422cdcfdfca53093e3")
+Karel_L.set_size(40,40)
+Karel_L.set_position(80,80)
+add(Karel_L)
+
+
+Karel_U = Image("https://codehs.com/uploads/5427873ee37e1c951475e00310acee07")
+Karel_U.set_size(40,40)
+Karel_U.set_position(120,120)
+add(Karel_U)
+
+
+Karel_D = Image("https://codehs.com/uploads/a6f516827babd9458f80313864f894a3")
+Karel_D.set_size(40,40)
+Karel_D.set_position(160,160)
+add(Karel_D)
