@@ -1,0 +1,5 @@
+dog = Image("https://codehs.com/uploads/8c079c47f6db5ffc902d0230735cd477")
+
+dog.set_size(200,200)
+dog.set_position(100,100)
+add(dog)
